@@ -37,10 +37,22 @@ crime <- estimated_crimes_1979_2020[!is.na(estimated_crimes_1979_2020$state_name
 ```
 
 ```{r}
+install.packages("ggrepel")
+library(ggrepel)
+```
+
+```{r}
 ggplot(data = crime)+ geom_line(mapping = aes(x=year, y=robbery, colour= state_name))+theme(legend.key.size = unit(.5, 'cm'),legend.text = element_text(size=7))+labs(colour = "State names")+scale_y_continuous(breaks = pretty_breaks())
 ```
 
-
+```{r}
+ggplot(crime, aes(x = year, y =robbery, col = state_name)) +    # Draw ggplot2 plot with labels
+  geom_line() +
+  geom_label_repel(aes(year,robbery,label = state_name),
+                   size=2.5,nudge_x = 1,direction = 'y', vjust=0,
+                   na.rm = TRUE) +
+  theme(legend.position = "none")
+```
 
 
 
